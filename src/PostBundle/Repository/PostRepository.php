@@ -10,4 +10,31 @@ namespace PostBundle\Repository;
  */
 class PostRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * Get post by $id
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getPostById(int $id)
+    {
+        return $this->_em
+            ->createQuery('SELECT p
+                           FROM PostBundle:Post p
+                           WHERE p.id = :id')
+            ->setParameter('id', $id)
+            ->getSingleResult();
+    }
+
+    /**
+     * Get all posts
+     *
+     * @return array
+     */
+    public function getAllPost()
+    {
+        return $this->_em
+            ->createQuery('SELECT p FROM PostBundle:Post p')
+            ->getResult();
+    }
 }

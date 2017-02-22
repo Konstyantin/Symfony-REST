@@ -1,4 +1,6 @@
 services:
-#    post.example:
-#        class: PostBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    post_repository:
+        class: Doctrine\ORM\EntityRepository
+        factory: ["@doctrine", getRepository]
+        arguments:
+            - PostBundle\Entity\Post

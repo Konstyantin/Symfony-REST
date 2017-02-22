@@ -3,14 +3,16 @@
 namespace PostBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMSSerializer;
 
 /**
  * Post
  *
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="PostBundle\Repository\PostRepository")
+ * @JMSSerializer\ExclusionPolicy("all")
  */
-class Post
+class Post implements \JsonSerializable
 {
     /**
      * @var int
@@ -18,6 +20,7 @@ class Post
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMSSerializer\Expose
      */
     private $id;
 
@@ -25,6 +28,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @JMSSerializer\Expose
      */
     private $name;
 
@@ -32,6 +36,7 @@ class Post
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
+     * @JMSSerializer\Expose
      */
     private $description;
 
@@ -92,6 +97,18 @@ class Post
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'id'    => $this->id,
+            'name' => $this->name,
+            'description'  => $this->description,
+        ];
     }
 }
 
