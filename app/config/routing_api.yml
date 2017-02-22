@@ -1,0 +1,3 @@
+posts:
+    type: rest
+    resource: PostBundle\Controller\PostRESTController
