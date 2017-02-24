@@ -34,7 +34,8 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getAllPost()
     {
         return $this->_em
-            ->createQuery('SELECT p FROM PostBundle:Post p')
+            ->createQuery('SELECT p.id, p.name, p.description FROM PostBundle:Post p')
+            ->useResultCache(true, 60, 'post_list')
             ->getResult();
     }
 }
