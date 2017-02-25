@@ -12,6 +12,6 @@ class PostControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertContains('Hello World', $client->getResponse()->getContent());
+        $this->assertContains('Post Bundle', $client->getResponse()->getContent());
     }
 }
