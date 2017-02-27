@@ -2,6 +2,8 @@
 
 namespace PostBundle\Repository;
 
+use Doctrine\Common\Cache\RedisCache;
+
 /**
  * PostRepository
  *
@@ -19,10 +21,11 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function getPostById(int $id)
     {
         return $this->_em
-            ->createQuery('SELECT p
+            ->createQuery('SELECT p.id, p.name, p.description
                            FROM PostBundle:Post p
                            WHERE p.id = :id')
             ->setParameter('id', $id)
+            ->useResultCache(true, 600, 'post')
             ->getSingleResult();
     }
 
