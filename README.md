@@ -25,6 +25,20 @@ Install composer dependencies with the following command:
 php composer.phar install
 ```
 
+Running test suite
+==================
+Tests are located in tests directory. By default test suites:
+  
+  * unit
+  
+  * functional
+  
+Tests can be executed by running
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./vendor/bin/simple-phpunit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Loading Fixtures
 ================
 You can load fixtures via the command line by using the doctrine:fixtures:load command:

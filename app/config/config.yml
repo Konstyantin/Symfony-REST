@@ -61,6 +61,8 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        metadata_cache_driver: redis
+        query_cache_driver: redis
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -123,3 +125,57 @@ fos_rest:
     exception:
         enabled: true
 
+# Redis
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost:6379
+            logging: %kernel.debug%
+        cache:
+            type: predis
+            alias: cache
+            dsn: redis://localhost:6379/1
+            logging: true
+        profiler_storage:
+            type: predis
+            alias: profiler_storage
+            dsn: redis://localhost:6379/2
+            logging: false
+        cluster:
+            type: predis
+            alias: cluster
+            dsn:
+                - redis://127.0.0.1/1
+                - redis://127.0.0.2/2
+                - redis://pw@/var/run/redis/redis-1.sock/10
+                - redis://pw@127.0.0.1:63790/10
+            options:
+                profile: 2.4
+                connection_timeout: 10
+                connection_persistent: true
+                read_write_timeout: 30
+                iterable_multibulk: false
+                throw_errors: true
+                cluster: Snc\RedisBundle\Client\Predis\Connection\PredisCluster
+                replication: false
+    session:
+        client: default
+        prefix: foo
+    doctrine:
+        metadata_cache:
+            client: cache
+            entity_manager: default
+            document_manager: default
+        result_cache:
+            client: cache
+            entity_manager: [default, read]
+            document_manager: [default, slave1, slave2]
+            namespace: "dcrc:"
+        query_cache:
+            client: cache
+            entity_manager: default
+        second_level_cache:
+            client: cache
+            entity_manager: default

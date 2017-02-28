@@ -19,7 +19,8 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            new PostBundle\PostBundle()
+            new Snc\RedisBundle\SncRedisBundle(),
+            new PostBundle\PostBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
